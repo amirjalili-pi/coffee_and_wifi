@@ -15,7 +15,9 @@
             <div class="col-sm-12">
 
                 <h1>All Cafes</h1>
-
+                {% for category, message in get_flashed_messages(with_categories=True) %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
                 <table class="table">
                     <!-- This is where you will write the code to render a Bootstrap
                     Table that contains all the information from the
@@ -34,13 +36,17 @@
                     <tbody>
                     {% for cafe in cafes %}
                         <tr>
-                            <th scope="row">{{ cafe["Cafe Name"] }}</th>
-                            <td><a href="{{ cafe["Location"] }}">Maps Link</a></td>
-                            <td>{{ cafe["Open"] }}</td>
-                            <td>{{ cafe["Close"] }}</td>
-                            <td>{{ cafe["Coffee"] }}</td>
-                            <td>{{ cafe["Wifi"] }}</td>
-                            <td>{{ cafe["Power"] }}</td>
+                            <th scope="row">{{ cafe["name"] }}</th>
+                            <td><a href="{{ cafe["location"] }}">Maps Link</a></td>
+                            <td>{{ cafe["open_t"] }}</td>
+                            <td>{{ cafe["close_t"] }}</td>
+                            <td>{{ cafe["coffee_rate"] }}</td>
+                            <td>{{ cafe["wifi_rate"] }}</td>
+                            <td>{{ cafe["power_rate"] }}</td>
+                            <td><a class="btn-warning btn-sm" href="{{ url_for('edit_cafe', pk=cafe._id) }}">Edit</a>
+                            </td>
+                            <td><a class="btn-danger btn-sm" href="{{ url_for('delete_cafe', pk=cafe._id) }}">Delete</a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
